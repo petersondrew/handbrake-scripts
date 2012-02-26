@@ -22,8 +22,8 @@ Compresses the n largest files in the specified directory (recursive find) using
 
 Usage
 -----
-compress-several.sh options directory
-  Options:
-   -h Show this message
-   -d Perform dry-run, printing the files that would be compressed
-   -n Number of files to compress (compresses n largest files)
+compress-several.sh options directory  
+Options:  
+  -h Show this message  
+  -d Perform dry-run, printing the files that would be compressed  
+  -n Number of files to compress (compresses n largest files)  
