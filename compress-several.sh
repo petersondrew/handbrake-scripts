@@ -27,7 +27,7 @@ do
       ;;
     d) DRYRUN=true;;
     n) NUMBER=$OPTARG;;
-    \?)
+    *)
       usage
       exit
       ;;
@@ -37,6 +37,11 @@ done
 shift $(($OPTIND - 1))	
 
 DIRECTORY=$@
+if [ -z "$DIRECTORY" ]; then
+  echo "No directory specified" >&2
+  exit
+fi
+
 if [ ! -d "$DIRECTORY" ]; then
   echo "Unknown directory" >&2
   exit
@@ -45,11 +50,15 @@ fi
 FILES=$(find $DIRECTORY -type f -print0 | xargs -0 du -s | sort -nr | head -n $NUMBER | cut -f2)
 
 compress(){
-  if [ $DRYRUN ]; then
-    printf "%s\n" "${FILES[@]}"
+  if [ $DRYRUN = true ]; then
+    echo "$@" | while read file ; do
+      printf "File: %s\n" "$file"
+    done
   else
-    handbrake.sh "$@"
+    echo "$@" | while read file ; do
+      handbrake.sh "$file"
+    done
   fi
 }
 
-compress "${files[@]}"
+compress "$FILES"
