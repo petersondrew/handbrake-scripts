@@ -26,4 +26,6 @@ compress-several.sh options directory
 Options:  
   -h Show this message  
   -d Perform dry-run, printing the files that would be compressed  
-  -n Number of files to compress (compresses n largest files)  
+  -n Number of files to compress (compresses n largest files) 
+
+[![endorse](http://api.coderwall.com/petersondrew/endorsecount.png)](http://coderwall.com/petersondrew) 
