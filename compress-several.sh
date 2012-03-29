@@ -4,7 +4,7 @@
 usage(){
 cat << EOF
 usage: $0 options directory
-	
+
 This script compresses large movies with handbrake.sh
 
 OPTIONS:
@@ -34,7 +34,7 @@ do
   esac
 done
 
-shift $(($OPTIND - 1))	
+shift $(($OPTIND - 1))
 
 DIRECTORY=$@
 if [ -z "$DIRECTORY" ]; then
@@ -50,15 +50,23 @@ fi
 FILES=$(find $DIRECTORY -type f -print0 | xargs -0 du -s | sort -nr | head -n $NUMBER | cut -f2)
 
 compress(){
+  oIFS="$IFS"
+  IFS="
+"
+  _files="$@"
+
   if [ $DRYRUN = true ]; then
-    echo "$@" | while read file ; do
-      printf "File: %s\n" "$file"
+    for f in ${_files[*]}; do
+      printf "File: %s\n" "$f"
     done
   else
-    echo "$@" | while read file ; do
-      handbrake.sh "$file"
+    #echo "$@" | while read file ; do
+    for f in ${_files[*]}; do
+      handbrake.sh "$f"
     done
   fi
+
+  IFS=oIFS
 }
 
 compress "$FILES"
