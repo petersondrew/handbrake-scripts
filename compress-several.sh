@@ -47,7 +47,8 @@ if [ ! -d "$DIRECTORY" ]; then
   exit
 fi
 
-FILES=$(find $DIRECTORY -type f -print0 | xargs -0 du -s | sort -nr | head -n $NUMBER | cut -f2)
+
+FILES=$(find "$DIRECTORY" \( -iregex '.*mkv$' -o -iregex '.*avi$' -o -iregex '.*mp4$' -o -iregex '.*m4v$' -o -iregex '.*mpg$' \) -prune -o -type f -print0 | xargs -0 du -s | sort -nr | head -n $NUMBER | cut -f2)
 
 compress(){
   oIFS="$IFS"
